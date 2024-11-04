@@ -23,7 +23,7 @@ This project is a simple Java program that simulates a basic bank account manage
 - A text editor or IDE: You can use any text editor (like Notepad) or an Integrated Development Environment (IDE) like IntelliJ IDEA or Eclipse to edit the code.
  
 2.**Download BankAccount.java:**
-- You can find BankAccount.java in src file and check where it is on your PC.
+- Download the Latest release of BankAccount.java and check where it is on your PC.
 
 3.**Run your CMD**
   
