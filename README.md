@@ -18,22 +18,22 @@ This project is a simple Java program that simulates a basic bank account manage
 
 ## How to Run the Program:
 
-**Prerequisites**
+1.**Prerequisites**
 - Java Development Kit (JDK): Make sure you have JDK installed on your computer. You can download it from Oracle's website or use an OpenJDK version. OR
 - A text editor or IDE: You can use any text editor (like Notepad) or an Integrated Development Environment (IDE) like IntelliJ IDEA or Eclipse to edit the code.
-- 
-**Download BankAccount.java:**
+ 
+2.**Download BankAccount.java:**
 - You can find BankAccount.java in src file and check where it is on your PC.
 
-**Run your CMD**
+3.**Run your CMD**
   
-**Navigate to the file directory:**
+4.**Navigate to the file directory:**
 - if it was on your Desktop:
    ```bash
    cd Desktop
    
-**Run the program:**
+5. **Run the program:**
    ```bash
    java BankAccount
 
-**Follow the prompts** in the console to interact with the program (e.g., enter the initial balance, deposit, withdraw, and check balance)
+6.**Follow the prompts** in the console to interact with the program (e.g., enter the initial balance, deposit, withdraw, and check balance)
