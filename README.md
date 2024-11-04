@@ -19,10 +19,10 @@ This project is a simple Java program that simulates a basic bank account manage
 ## How to Run the Program
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/bankaccount.git
+   git clone https://github.com/alaa091/BankAccount.git
 2. **Navigate to the project directory:**
    ```bash
-   cd bankaccount
+   cd BankAccount
 3. **Compile the Java files:**
    ```bash
    javac BankAccount.java
