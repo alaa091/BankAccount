@@ -21,9 +21,12 @@ This project is a simple Java program that simulates a basic bank account manage
    ```bash
    git clone https://github.com/yourusername/bankaccount.git
 2. **Navigate to the project directory:**
+   ```bash
    cd bankaccount
 3. **Compile the Java files:**
+   ```bash
    javac BankAccount.java
 4. **Run the program:**
+   ```bash
    java BankAccount
 
