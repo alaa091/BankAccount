@@ -37,5 +37,5 @@ This project is a simple Java program that simulates a basic bank account manage
    java BankAccount
 
 6.**Follow the prompts** in the console to interact with the program (e.g., enter the initial balance, deposit, withdraw, and check balance)
-## Contibutions:
-- Contributions are welcome! Feel free to fork the repository and submit a pull request with improvements or features.
+## Discord:
+- Add me on Discord if you want to dm -> Mr.Alaa#0938
