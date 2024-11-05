@@ -1,104 +1,169 @@
-import java.util.InputMismatchException; // Import exception class for handling invalid input
-import java.util.Scanner; // Import the Scanner class to take input from the user
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.List;
+import java.util.Scanner;
 
 // Class representing a simple bank account
 public class BankAccount {
+    private User user; // Associate a user with the account
     private double balance; // Instance variable to store the account balance
 
-    // Constructor to initialize the account with an initial balance
-    public BankAccount(double initialBalance) {
-        // Check if the initial balance is valid (non-negative)
+    // Constructor to initialize the account with a user and an initial balance
+    public BankAccount(User user, double initialBalance) {
+        this.user = user;
         if (initialBalance >= 0) {
-            this.balance = initialBalance; // Set the initial balance
+            this.balance = initialBalance;
         } else {
             System.out.println("Initial balance cannot be negative. Setting balance to 0.");
-            this.balance = 0; // Set to 0 if the input is invalid
+            this.balance = 0;
         }
     }
 
     // Method to deposit money into the account
     public void deposit(double amount) {
-        // Check if the deposit amount is positive
         if (amount > 0) {
-            balance += amount; // Increase the balance by the deposit amount
-            System.out.println("Deposited: $" + amount); // Print confirmation
+            balance += amount;
+            System.out.println("Deposited: $" + amount);
         } else {
-            System.out.println("Deposit amount must be positive."); // Handle invalid input
+            System.out.println("Deposit amount must be positive.");
         }
     }
 
     // Method to withdraw money from the account
     public void withdraw(double amount) {
-        // Check if the withdrawal amount is positive and does not exceed the balance
         if (amount > 0 && amount <= balance) {
-            balance -= amount; // Decrease the balance by the withdrawal amount
-            System.out.println("Withdrew: $" + amount); // Print confirmation
+            balance -= amount;
+            System.out.println("Withdrew: $" + amount);
         } else if (amount > balance) {
-            System.out.println("Insufficient balance."); // Handle overdraft attempt
+            System.out.println("Insufficient balance.");
         } else {
-            System.out.println("Withdrawal amount must be positive."); // Handle invalid input
+            System.out.println("Withdrawal amount must be positive.");
         }
     }
 
     // Method to check and display the current balance
     public void checkBalance() {
-        System.out.println("Current balance: $" + balance); // Print current balance
+        System.out.println("Current balance: $" + balance);
+    }
+
+    // Separate class for managing user registration and login
+    public static class BankApplication {
+        private static List<User> users = new ArrayList<>();
+
+        public static void registerUser(String username, String password) {
+            users.add(new User(username, password));
+            System.out.println("User registered successfully.");
+        }
+
+        public static User loginUser(String username, String password) {
+            for (User user : users) {
+                if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+                    System.out.println("Login successful.");
+                    return user;
+                }
+            }
+            System.out.println("Invalid username or password.");
+            return null;
+        }
     }
 
     // Main method to execute the program
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in); // Create a Scanner object for user input
+        Scanner scanner = new Scanner(System.in);
 
-        // Prompt user for the initial balance and read input
-        System.out.print("Enter initial balance: ");
-        double initialBalance = scanner.nextDouble();
+        // User registration
+        System.out.print("Register username: ");
+        String username = scanner.nextLine();
+        System.out.print("Register password: ");
+        String password = scanner.nextLine();
+        BankApplication.registerUser(username, password);
 
-        // Create a BankAccount object with the initial balance provided by the user
-        BankAccount account = new BankAccount(initialBalance);
-
-        boolean running = true; // Flag to keep the program running
-
-        // Loop to display the menu and handle user choices
-        while (running) {
-            // Display the menu
-            System.out.println("Choose an option:");
-            System.out.println("1. Deposit");
-            System.out.println("2. Withdraw");
-            System.out.println("3. Check Balance");
-            System.out.println("4. Exit");
-            System.out.print("Enter your choice: ");
-
+        // Loop to ensure valid initial balance input
+        double initialBalance = -1; // Initialize with an invalid value to enter the loop
+        while (initialBalance < 0) {
+            System.out.print("Enter initial balance: ");
             try {
-                int choice = scanner.nextInt(); // Try reading the user's choice
+                initialBalance = scanner.nextDouble(); //prompt initial balance
+                if (initialBalance < 0) {
+                    System.out.println("Initial balance cannot be negative. Please try again.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a valid number.");
+                scanner.nextLine(); // Clear the invalid input
+            }
+        }
+        // Print the confirmation message after a valid initial balance is entered
+        System.out.println("Your account has been created with your initial balance!");
+        scanner.nextLine(); // Consume the leftover newline
+
+        // User login
+        System.out.print("Login username: ");
+        String loginUsername = scanner.nextLine();
+        System.out.print("Login password: ");
+        String loginPassword = scanner.nextLine();
+        User loggedInUser = BankApplication.loginUser(loginUsername, loginPassword);
+
+        if (loggedInUser != null) {
+            BankAccount account = new BankAccount(loggedInUser, initialBalance);
+            boolean running = true;
+
+            while (running) {
+                System.out.println("Choose an option:");
+                System.out.println("1. Deposit");
+                System.out.println("2. Withdraw");
+                System.out.println("3. Check Balance");
+                System.out.println("4. Exit");
+                System.out.print("Enter your choice: ");
+
+                int choice;
+                try {
+                    choice = scanner.nextInt();
+                } catch (InputMismatchException e) {
+                    System.out.println("Invalid input. Please enter a number.");
+                    scanner.nextLine(); // Clear the invalid input
+                    continue;
+                }
 
                 switch (choice) {
-                    case 1: //handle deposit
+                    case 1:
                         System.out.print("Enter deposit amount: ");
-                        double depositAmount = scanner.nextDouble(); //read deposit amount
-                        account.deposit(depositAmount); //call deposit method
+                        double depositAmount;
+                        try {
+                            depositAmount = scanner.nextDouble();
+                        } catch (InputMismatchException e) {
+                            System.out.println("Invalid amount.");
+                            scanner.nextLine(); // Clear the invalid input
+                            continue;
+                        }
+                        account.deposit(depositAmount);
                         break;
-                    case 2: //handle withdraw
+                    case 2:
                         System.out.print("Enter withdrawal amount: ");
-                        double withdrawAmount = scanner.nextDouble(); //read withdraw amount
-                        account.withdraw(withdrawAmount); //call withdraw method
+                        double withdrawAmount;
+                        try {
+                            withdrawAmount = scanner.nextDouble();
+                        } catch (InputMismatchException e) {
+                            System.out.println("Invalid amount.");
+                            scanner.nextLine(); // Clear the invalid input
+                            continue;
+                        }
+                        account.withdraw(withdrawAmount);
                         break;
-                    case 3: //handle check balance
-                        account.checkBalance(); //call check balance method
+                    case 3:
+                        account.checkBalance();
                         break;
-                    case 4: // Exit the program
-                        running = false; // Set running to false to stop the loop
-                        System.out.println("Exiting. Thank you!"); // Print exit message
+                    case 4:
+                        running = false;
+                        System.out.println("Exiting. Thank you!");
                         break;
-                    default: // Handle invalid menu choice
-                        System.out.println("Invalid choice. Please try again."); // Print error message55
+                    default:
+                        System.out.println("Invalid choice. Please try again.");
                         break;
                 }
-            } catch (InputMismatchException e) { //Preventing the choice input of being a double
-                System.out.println("Invalid input. Please enter a valid integer choice.");
-                scanner.nextLine(); // Clear the invalid input from the scanner buffer
+                scanner.nextLine(); // Consume the leftover newline
             }
         }
 
-        scanner.close(); // Close the scanner to avoid resource leak
+        scanner.close();
     }
 }
